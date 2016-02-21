@@ -12,6 +12,8 @@ module.exports = React.createClass({
         <head>
           <title>{this.props.title || 'Kabob'}</title>
           <link rel='shortcut icon' href='/files/icon.png' />
+          <link rel='stylesheet' href='/files/bundle.css' />
+          <script src='/files/bundle.js' />
         </head>
         <body>
           <Header />

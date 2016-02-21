@@ -3,8 +3,8 @@ const React = require('react');
 var Component = React.createClass({
   render: function () {
     return (
-      <header>
-        <h1>Kabob</h1>
+      <header className='header'>
+        <h1 className='header__title'>Kabob</h1>
       </header>
     );
   }

@@ -1,0 +1,7 @@
+@import '../components/**/*.css';
+
+html { font-size: 62.5% } /* reset root em unit to 10px */
+
+body {
+  font-family: 'Source Sans Pro', 'Arial', sans-serif;
+}
