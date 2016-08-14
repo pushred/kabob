@@ -1,14 +1,15 @@
-'use strict';
-
 const PORT = 8080;
 
 // dependencies
 
+const createStore = require('redux').createStore;
 const Glue = require('glue');
 const HapiReactViews = require('hapi-react-views');
 const Path = require('path');
 
-var config = {
+const reducers = require('@app/universal/reducers');
+
+const config = {
   server: {
     connections: {
       router: {
@@ -23,18 +24,18 @@ var config = {
     plugin: {
       register: 'good',
       options: {
-        reporters: [{
-          reporter: require('good-console'),
-          events: { log: '*', response: '*' }
-        }]
+        reporters: {
+          console: [{
+            module: 'good-console',
+            args: [{ log: '*', response: '*' }]
+          }]
+        }
       }
     }
   }, {
     plugin: 'inert'
   }, {
     plugin: 'vision'
-  }, {
-    plugin: '@app/server/reply.initialView'
   }]
 };
 
@@ -45,6 +46,10 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
     engines: {
       jsx: HapiReactViews
     },
+    compileOptions: {
+      layoutPath: __dirname,
+      layout: 'layout'
+    },
     isCached: false,
     path: __dirname
   });
@@ -52,11 +57,13 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
   // store initial state in hapi request object
 
   server.ext('onRequest', function (request, reply) {
-    request.app.state = {};
+    request.app.state = {
+      meta: {}
+    };
     reply.continue();
   });
 
-  // set static file root
+  // static file root
 
   server.route({
     method: 'GET',
@@ -68,17 +75,14 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
     }
   });
 
+  // views
+
   server.route({
     method: 'GET',
     path: '/',
-    handler: (req, reply) => {
-      req.app.state = {
-        meta: {
-          title: 'Something new'
-        }
-      };
-
-      reply.initialView('index.jsx');
+    handler: (request, reply) => {
+      request.app.state.meta.title = 'Ingredients';
+      reply.view('index.jsx', hydrate(request.app.state));
     }
   });
 
@@ -86,3 +90,19 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
     console.info('kabob running on port ' + PORT.toString());
   });
 });
+
+/**
+ * Creates a Redux store with available data for universal rendering
+ * Serialized version hydrates client via react-redux
+ *
+ * @param {object} current request.app.state tree
+ * @returns {object} Redux store that includes a serialized version of the state tree
+ * @private
+ */
+
+function hydrate (state) {
+  const store = createStore(reducers, state);
+  return Object.assign(store.getState(), {
+    initialState: 'window.__STATE__ = ' + JSON.stringify(store.getState())
+  });
+}

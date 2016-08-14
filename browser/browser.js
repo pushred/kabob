@@ -1,9 +1,9 @@
-var App = require('@app/universal/containers/app.jsx');
-var React = require('react');
-var redux = require('redux');
-var reducers = require('@app/universal/reducers');
-var render = require('react-dom').render;
-var WebFont = require('webfontloader');
+const App = require('@app/universal/containers/app.jsx');
+const React = require('react');
+const redux = require('redux');
+const reducers = require('@app/universal/reducers');
+const render = require('react-dom').render;
+const WebFont = require('webfontloader');
 
 function init () {
   WebFont.load({
@@ -12,17 +12,17 @@ function init () {
     }
   });
 
-  var initialState = window.__STATE__;
+  const initialState = window.__STATE__;
 
-  var createStore = redux.compose(
+  const createStore = redux.compose(
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )(redux.createStore);
 
-  var store = createStore(reducers, initialState);
+  const store = createStore(reducers, initialState);
 
   render(
     <App store={store} />,
-    dom.find('.layout')
+    document.querySelector('.layout')
   );
 }
 

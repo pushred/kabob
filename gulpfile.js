@@ -1,12 +1,11 @@
-var browserify = require('browserify');
-var fs = require('fs');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var postcss = require('gulp-postcss');
-var rename = require('gulp-rename');
-var run = require('run-sequence');
-var source = require('vinyl-source-stream');
-var watch = require('gulp-watch');
+const browserify = require('browserify');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const run = require('run-sequence');
+const source = require('vinyl-source-stream');
+const watch = require('gulp-watch');
 
 function handleError (err) {
   gutil.log(err.toString());
@@ -21,7 +20,7 @@ gulp.task('bundleCSS', () => {
   return gulp
     .src('browser/index.css')
     .pipe(postcss([
-      require('postcss-import')({ glob: true }),
+      require('postcss-easy-import')({ glob: true }),
       require('postcss-nested')
     ]))
     .on('error', handleError)
@@ -30,11 +29,12 @@ gulp.task('bundleCSS', () => {
 });
 
 gulp.task('bundleJS', () => {
-  var scripts = browserify({
+  const scripts = browserify({
     entries: 'browser/browser.js'
   });
 
-  return scripts.bundle()
+  return scripts
+    .bundle()
     .on('error', handleError)
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('server/files'));
@@ -43,11 +43,11 @@ gulp.task('bundleJS', () => {
 // dev
 
 gulp.task('default', ['build'], () => {
-  watch(['universal/**/*.css'], () => {
+  watch(['{browser,universal}/**/*.css'], () => {
     run('bundleCSS');
   });
 
-  watch(['universal/**/*.js'], () => {
+  watch(['{browser,universal}/**/*.js'], () => {
     run('bundleJS');
   });
 });

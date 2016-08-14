@@ -1,11 +1,12 @@
-var connect = require('react-redux').connect;
-var Page = require('@app/server/index.jsx');
-var Provider = require('react-redux').Provider;
-var React = require('react');
+const connect = require('react-redux').connect;
+const Provider = require('react-redux').Provider;
+const React = require('react');
+
+const Page = require('@app/server/index.jsx');
 
 class App extends React.Component {
   render () {
-    var { store } = this.props;
+    const { store } = this.props;
 
     return (
       <Provider store={store}>
@@ -18,9 +19,9 @@ class App extends React.Component {
 function mapStateToProps (state) {
   return {
     meta: state.meta
-  }
+  };
 }
 
-App = connect(mapStateToProps)(App);
+connect(mapStateToProps)(App);
 
 module.exports = App;
