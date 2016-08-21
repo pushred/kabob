@@ -2,12 +2,9 @@ const PORT = 8080;
 
 // dependencies
 
-const createStore = require('redux').createStore;
 const Glue = require('glue');
 const HapiReactViews = require('hapi-react-views');
 const Path = require('path');
-
-const reducers = require('@app/universal/reducers');
 
 const config = {
   server: {
@@ -32,12 +29,13 @@ const config = {
         }
       }
     }
-  }, {
-    plugin: 'inert'
-  }, {
-    plugin: 'vision'
-  }]
+  },
+  { plugin: 'inert' },
+  { plugin: 'vision' },
+  { plugin: '@app/server/controllers/combos' }]
 };
+
+config.registrations.push({ plugin: 'blipp' });
 
 Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, server) => {
   if (err) throw err;
@@ -47,11 +45,11 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
       jsx: HapiReactViews
     },
     compileOptions: {
-      layoutPath: __dirname,
+      layoutPath: Path.join(process.cwd(), 'universal', 'containers'),
       layout: 'layout'
     },
     isCached: false,
-    path: __dirname
+    path: Path.join(process.cwd(), 'universal')
   });
 
   // store initial state in hapi request object
@@ -75,34 +73,5 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
     }
   });
 
-  // views
-
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, reply) => {
-      request.app.state.meta.title = 'Ingredients';
-      reply.view('index.jsx', hydrate(request.app.state));
-    }
-  });
-
-  server.start(() => {
-    console.info('kabob running on port ' + PORT.toString());
-  });
+  server.start(() => console.info('kabob running on port ' + PORT.toString()));
 });
-
-/**
- * Creates a Redux store with available data for universal rendering
- * Serialized version hydrates client via react-redux
- *
- * @param {object} current request.app.state tree
- * @returns {object} Redux store that includes a serialized version of the state tree
- * @private
- */
-
-function hydrate (state) {
-  const store = createStore(reducers, state);
-  return Object.assign(store.getState(), {
-    initialState: 'window.__STATE__ = ' + JSON.stringify(store.getState())
-  });
-}

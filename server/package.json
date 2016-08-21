@@ -1,5 +1,5 @@
 {
-  "main": "browser.js",
+  "main": "server.js",
   "babel": {
     "presets": [
       "es2015",

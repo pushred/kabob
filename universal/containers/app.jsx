@@ -1,8 +1,7 @@
-const connect = require('react-redux').connect;
 const Provider = require('react-redux').Provider;
 const React = require('react');
 
-const Page = require('@app/server/index.jsx');
+const Container = require('@app/universal/containers/combo.jsx');
 
 class App extends React.Component {
   render () {
@@ -10,18 +9,10 @@ class App extends React.Component {
 
     return (
       <Provider store={store}>
-        <Page />
+        <Container />
       </Provider>
     );
   }
 }
-
-function mapStateToProps (state) {
-  return {
-    meta: state.meta
-  };
-}
-
-connect(mapStateToProps)(App);
 
 module.exports = App;

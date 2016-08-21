@@ -1,0 +1,16 @@
+.combo {
+  margin: auto;
+
+  .list,
+  .input__field {
+    font-weight: 400;
+    font-size: 1.6em;
+    line-height: 2.5;
+    text-align: center;
+    text-transform: lowercase;
+  }
+
+  .input__field {
+    margin-top: 1em;
+  }
+}

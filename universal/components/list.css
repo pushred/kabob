@@ -1,0 +1,42 @@
+@keyframes intro {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 4rem;
+    opacity: 1;
+  }
+}
+
+.list,
+.list__item {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.list__item {
+  position: relative;
+
+  &--enter { animation: intro .2s }
+  &--leave { animation: intro .2s reverse }
+
+  &_remove {
+    outline: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .2s;
+    appearance: none;
+    margin: 0;
+    border: 0;
+    padding: 0 1em;
+    position: absolute;
+    top: 0;
+    right: -2em;
+    background: none;
+    line-height: 4rem;
+  }
+
+  &:hover .list__item_remove { opacity: 1 }
+}

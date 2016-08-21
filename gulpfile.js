@@ -21,7 +21,8 @@ gulp.task('bundleCSS', () => {
     .src('browser/index.css')
     .pipe(postcss([
       require('postcss-easy-import')({ glob: true }),
-      require('postcss-nested')
+      require('postcss-nested'),
+      require('autoprefixer')
     ]))
     .on('error', handleError)
     .pipe(rename('bundle.css'))
@@ -47,7 +48,7 @@ gulp.task('default', ['build'], () => {
     run('bundleCSS');
   });
 
-  watch(['{browser,universal}/**/*.js'], () => {
+  watch(['{browser,universal}/**/*.{js,jsx}'], () => {
     run('bundleJS');
   });
 });
