@@ -6,6 +6,7 @@
     "email": "eric@pushred.co"
   },
   "scripts": {
+    "dev": ". ./.env && npm-run-all -p dev:*",
     "dev:browser": "gulp",
     "dev:server": "nodemon --exec babel-node server --watch server --ignore server/files",
     "lint": "semistandard",
@@ -58,6 +59,7 @@
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "blipp": "^2.3.0",
+    "browser-sync": "^2.14.0",
     "browserify": "^13.0.0",
     "deep-freeze": "0.0.1",
     "gulp": "^3.9.1",
@@ -67,6 +69,7 @@
     "gulp-watch": "^4.3.5",
     "jsx-test-helpers": "^1.1.0",
     "nodemon": "^1.10.2",
+    "npm-run-all": "^3.0.0",
     "postcss-easy-import": "^1.0.1",
     "postcss-nested": "^1.0.0",
     "pre-commit": "^1.1.2",
