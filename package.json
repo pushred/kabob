@@ -46,6 +46,7 @@
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.1",
     "redux": "^3.3.1",
+    "redux-localstorage": "^1.0.0-rc5",
     "short-id": "0.1.0-1",
     "vision": "^4.0.1"
   },
