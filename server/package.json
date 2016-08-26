@@ -1,0 +1,6 @@
+{
+  "main": "server.js",
+  "babel": {
+    "presets": ["es2015", "react"]
+  }
+}

@@ -31,7 +31,7 @@ gulp.task('bundleCSS', () => {
 
 gulp.task('bundleJS', () => {
   var scripts = browserify({
-    entries: 'browser/index.js'
+    entries: 'browser/browser.js'
   });
 
   return scripts.bundle()
@@ -43,11 +43,11 @@ gulp.task('bundleJS', () => {
 // dev
 
 gulp.task('default', ['build'], () => {
-  watch(['{browser,components}/**/*.css'], () => {
+  watch(['universal/**/*.css'], () => {
     run('bundleCSS');
   });
 
-  watch(['{browser,components}/**/*.js'], () => {
+  watch(['universal/**/*.js'], () => {
     run('bundleJS');
   });
 });

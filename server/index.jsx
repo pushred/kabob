@@ -1,5 +1,5 @@
 const React = require('react');
-const Layout = require('./layout.jsx');
+const Header = require('@app/universal/components/header.jsx');
 
 var Component = React.createClass({
   propTypes: {
@@ -7,9 +7,10 @@ var Component = React.createClass({
   },
   render: function () {
     return (
-      <Layout>
+      <main>
+        <Header />
         <h2>Hello!</h2>
-      </Layout>
+      </main>
     );
   }
 });

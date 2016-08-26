@@ -7,7 +7,6 @@ const PORT = 8080;
 const Glue = require('glue');
 const HapiReactViews = require('hapi-react-views');
 const Path = require('path');
-const recursiveDir = require('recursive-readdir');
 
 var config = {
   server: {
@@ -34,40 +33,30 @@ var config = {
     plugin: 'inert'
   }, {
     plugin: 'vision'
+  }, {
+    plugin: '@app/server/reply.initialView'
   }]
 };
 
 Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, server) => {
   if (err) throw err;
 
-  recursiveDir('.', ['node_modules', '.*'], (err, files) => {
-    if (err) throw err;
-
-    // get and load all component folders as view paths to avoid component/component view references
-    var componentPaths = files.map(path => {
-      return (Path.extname(Path.basename(path)) === '.jsx')
-        ? Path.resolve('.', Path.dirname(path))
-        : false;
-    });
-
-    server.views({
-      engines: {
-        jsx: HapiReactViews
-      },
-      isCached: false,
-      path: componentPaths.filter(Boolean)
-    });
+  server.views({
+    engines: {
+      jsx: HapiReactViews
+    },
+    isCached: false,
+    path: __dirname
   });
 
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: (req, reply) => {
-      reply.view('index', {
-        title: 'kabob'
-      });
-    }
+  // store initial state in hapi request object
+
+  server.ext('onRequest', function (request, reply) {
+    request.app.state = {};
+    reply.continue();
   });
+
+  // set static file root
 
   server.route({
     method: 'GET',
@@ -76,6 +65,20 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
       directory: {
         path: 'server/files'
       }
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/',
+    handler: (req, reply) => {
+      req.app.state = {
+        meta: {
+          title: 'Something new'
+        }
+      };
+
+      reply.initialView('index.jsx');
     }
   });
 
