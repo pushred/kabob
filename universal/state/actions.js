@@ -26,4 +26,40 @@ function removeIngredient (id) {
   };
 }
 
-module.exports = {addIngredient, removeIngredient};
+/**
+ * Add and switch to a new combo
+ */
+
+function addCombo () {
+  return {
+    type: types.ADD_COMBO
+  };
+}
+
+/**
+ * Removes a combo
+ * @param {object} params
+ * @param {string} params.id
+ */
+
+function removeCombo (id) {
+  return {
+    type: types.REMOVE_COMBO,
+    payload: id
+  };
+}
+
+/**
+ * Set a combo to active, defaults to first available
+ * @param {object} params
+ * @param {string} params.id
+ */
+
+function setCombo (id) {
+  return {
+    type: types.SET_COMBO,
+    payload: id
+  };
+}
+
+module.exports = {addCombo, addIngredient, removeCombo, removeIngredient, setCombo};

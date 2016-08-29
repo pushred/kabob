@@ -1,14 +1,14 @@
 .header {
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: var(--margin-space);
+  right: var(--margin-space);
 
   &__title {
     cursor: default;
     user-select: none;
     margin: 0;
     padding: 0;
-    color: #BABABA;
+    color: var(--gray-60-color);
     font-weight: 600;
     font-size: 1.4em;
     text-transform: lowercase;

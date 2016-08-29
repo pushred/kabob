@@ -1,0 +1,13 @@
+@import '../../browser/index.css';
+
+.button {
+  @apply --button-reset;
+}
+
+.button {
+  box-sizing: border-box;
+  padding: 0 1em;
+  line-height: 4rem;
+  border: 1px solid var(--gray-80-color);
+  border-radius: .25em;
+}

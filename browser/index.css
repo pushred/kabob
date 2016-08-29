@@ -1,6 +1,9 @@
 @import './fonts.css';
-@import '../universal/containers/*.css';
-@import '../universal/components/*.css';
+@import '../universal/containers/combos.css';
+@import '../universal/components/button.css';
+@import '../universal/components/header.css';
+@import '../universal/components/input.css';
+@import '../universal/components/list.css';
 
 html { font-size: 62.5% } /* reset root em unit to 10px */
 
@@ -14,7 +17,7 @@ body,
 input,
 button {
   font-weight: 300;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: var(--ui-font);
 }
 
 .layout {
@@ -27,4 +30,40 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+:root {
+  --ui-font: 'Montserrat', 'Arial', sans-serif;
+
+  /* colors */
+
+  --white-color: hsl(0, 0%, 100%);
+  --black-color: hsl(0, 0%, 2%);
+
+  --gray-80-color: hsl(0, 0%, 80%);
+  --gray-60-color: hsl(0, 0%, 60%);
+  --gray-40-color: hsl(0, 0%, 40%);
+  --gray-20-color: hsl(0, 0%, 20%);
+
+  /* spacing units */
+
+  --margin-space: 2rem;
+
+  /* resets */
+
+  --button-reset: {
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    outline: none;
+    border: 0;
+    padding: 0;
+    background: none;
+  }
+
+  --list-reset: {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
 }

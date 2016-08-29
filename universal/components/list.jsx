@@ -16,7 +16,7 @@ class List extends React.Component {
     return (
       <li className='list__item' key={props.id}>
         <span className='list__item_text'>{props.name}</span>
-        {handleRemove ? <button className='list__item_remove' onClick={handleRemove.bind(this, props.id)}>Remove</button> : ''}
+        {handleRemove ? <button className='button list__item_remove' onClick={handleRemove.bind(this, props.id)}>Remove</button> : ''}
       </li>
     );
   }

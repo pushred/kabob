@@ -35,7 +35,14 @@ const config = {
   { plugin: '@app/server/controllers/combos' }]
 };
 
-config.registrations.push({ plugin: 'blipp' });
+config.registrations.push({
+  plugin: {
+    register: 'blipp',
+    options: {
+      showStart: false
+    }
+  }
+});
 
 Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, server) => {
   if (err) throw err;
@@ -73,5 +80,5 @@ Glue.compose(config, { relativeTo: Path.join(process.cwd(), 'server') }, (err, s
     }
   });
 
-  server.start(() => console.info('kabob running on port ' + PORT.toString()));
+  server.start(() => console.info(server.plugins.blipp.text()));
 });

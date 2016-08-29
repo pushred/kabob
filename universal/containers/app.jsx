@@ -1,7 +1,7 @@
 const Provider = require('react-redux').Provider;
 const React = require('react');
 
-const Container = require('@app/universal/containers/combo.jsx');
+const Container = require('@app/universal/containers/combos.jsx');
 
 class App extends React.Component {
   render () {

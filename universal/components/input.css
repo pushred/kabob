@@ -1,18 +1,20 @@
 .input {
+  display: block;
+
   &__field {
     height: 4rem;
     box-sizing: border-box;
-    background: #FFFFFF;
-    border: 1px solid #EAEAEA;
+    outline: none;
+    background: var(--white-color);
+    border: 1px solid var(--gray-80-color);
     padding: .5em;
-    box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.15);
+    box-shadow: 0px 4px 6px 0px var(--gray-80-color);
     border-radius: 3px;
   }
 
   &__field:focus {
-    outline: none;
-    border-color: #DADADA;
-    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+    border-color: var(--gray-60-color);
+    box-shadow: 0px 2px 2px 0px var(--gray-80-color);
     transition: all .2s;
   }
 }

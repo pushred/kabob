@@ -11,9 +11,7 @@
 
 .list,
 .list__item {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+  @apply --list-reset;
 }
 
 .list__item {
@@ -23,19 +21,12 @@
   &--leave { animation: intro .2s reverse }
 
   &_remove {
-    outline: none;
-    cursor: pointer;
+    position: absolute;
+    top: calc(.5rem - 1px);
+    right: -3em;
     opacity: 0;
     transition: opacity .2s;
-    appearance: none;
-    margin: 0;
-    border: 0;
-    padding: 0 1em;
-    position: absolute;
-    top: 0;
-    right: -2em;
-    background: none;
-    line-height: 4rem;
+    line-height: 3rem;
   }
 
   &:hover .list__item_remove { opacity: 1 }

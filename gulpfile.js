@@ -22,8 +22,10 @@ gulp.task('bundleCSS', () => {
   return gulp
     .src('browser/index.css')
     .pipe(postcss([
-      require('postcss-easy-import')({ glob: true }),
-      require('postcss-nested'),
+      require('postcss-import'),
+      require('postcss-custom-properties'), // leave :root for @apply
+      require('postcss-apply'),
+      require('postcss-nesting'),
       require('autoprefixer')
     ]))
     .on('error', handleError)
